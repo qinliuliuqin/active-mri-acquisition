@@ -278,7 +278,7 @@ class ReconstructorNetwork(nn.Module):
         ft_x = fft_utils.fft(x)
         fuse = (
             fft_utils.ifft(
-                torch.where((1 - mask).byte(), ft_x, torch.tensor(0.0 + 0.0j).to(ft_x.device))
+                torch.where((1 - mask).byte(), ft_x.float(), torch.tensor(0.0).to(ft_x.device))
             )
             + input
         )
