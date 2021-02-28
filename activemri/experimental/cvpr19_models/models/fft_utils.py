@@ -47,7 +47,7 @@ def fftshift(x, dim=None):
     return roll(x, shift, dim)
 
 
-def ifft(x, normalized=False, ifft_shift=False):
+def ifft(x, normalized=None, ifft_shift=False):
     x = x.permute(0, 2, 3, 1)
     y = torch.fft.ifft(x, 2, norm=normalized)
     if ifft_shift:
@@ -55,14 +55,14 @@ def ifft(x, normalized=False, ifft_shift=False):
     return y.permute(0, 3, 1, 2)
 
 
-def rfft(x, normalized=False):
+def rfft(x, normalized=None):
     # x is in gray scale and has 1-d in the 1st dimension
     x = x.squeeze(1)
     y = torch.fft.rfft(x, 2, onesided=False, norm=normalized)
     return y.permute(0, 3, 1, 2)
 
 
-def fft(x, normalized=False, shift=False):
+def fft(x, normalized=None, shift=False):
     x = x.permute(0, 2, 3, 1)
     if shift:
         x = fftshift(x, dim=(1, 2))
