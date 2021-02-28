@@ -81,7 +81,7 @@ class MICCAI2020Data(torch.utils.data.Dataset):
             kspace = data["kspace"][slice_id]
             kspace = torch.from_numpy(np.stack([kspace.real, kspace.imag], axis=-1))
             kspace = fastmri.ifftshift(kspace, dim=(0, 1))
-            target = torch.fft.ifft(kspace, 2, normalized=False)
+            target = torch.fft.ifft(kspace, 2, norm=False)
             target = fastmri.ifftshift(target, dim=(0, 1))
             # Normalize using mean of k-space in training data
             target /= 7.072103529760345e-07
