@@ -47,10 +47,10 @@ def center_crop(x: TensorType, shape: Tuple[int, int]) -> TensorType:
 
 
 def ifft_permute_maybe_shift(
-    x: torch.Tensor, normalized: bool = False, ifft_shift: bool = False
+    x: torch.Tensor, normalized: str = None, ifft_shift: bool = False
 ) -> torch.Tensor:
     x = x.permute(0, 2, 3, 1)
-    y = torch.ifft(x, 2, normalized=normalized)
+    y = torch.fft.ifft(x, 2, norm=normalized)
     if ifft_shift:
         y = fastmri.ifftshift(y, dim=(1, 2))
     return y.permute(0, 3, 1, 2)
