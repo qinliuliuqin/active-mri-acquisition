@@ -9,7 +9,7 @@ from typing import Dict, Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
-import skimage.measure
+import skimage.metrics
 import torch
 import torchvision.utils as tvutil
 
@@ -25,7 +25,7 @@ def load_checkpoint(checkpoint_path: str) -> Optional[Dict]:
 def compute_ssims(xs, ys):
     ssims = []
     for i in range(xs.shape[0]):
-        ssim = skimage.measure.compare_ssim(
+        ssim = skimage.metrics.structural_similarity(
             xs[i, 0].cpu().numpy(),
             ys[i, 0].cpu().numpy(),
             data_range=ys[i, 0].cpu().numpy().max(),
@@ -37,7 +37,7 @@ def compute_ssims(xs, ys):
 def compute_psnrs(xs, ys):
     psnrs = []
     for i in range(xs.shape[0]):
-        psnr = skimage.measure.compare_psnr(
+        psnr = skimage.metrics.peak_signal_noise_ratio(
             xs[i, 0].cpu().numpy(),
             ys[i, 0].cpu().numpy(),
             data_range=ys[i, 0].cpu().numpy().max(),
