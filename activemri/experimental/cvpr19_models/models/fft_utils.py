@@ -195,7 +195,7 @@ class GANLossKspace(nn.Module):
                 target_tensor[:] = energy
             # force observed part to always
             for i in range(mask.shape[0]):
-                idx = torch.nonzero(mask[i, 0, 0, :])
+                idx = torch.nonzero(mask[i, 0, 0, :], as_tuple=False)
                 target_tensor[i, idx] = 1
         return target_tensor
 
